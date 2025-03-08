@@ -1,34 +1,105 @@
+'use client';
 import { FaChevronRight } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import Link from 'next/link';
+import { useState, useEffect, useCallback } from 'react';
+
 
 const images = [
   '/banner.webp',
-  '/background2.webp',  // Add your other image paths here
-  '/background3.webp'   // Add your other image paths here
+  '/banner-bg.webp',  // Add your other image paths here
+  '/banner-bg-2.webp'   // Add your other image paths here
 ];
 
+// Animation settings - adjust these to control the loop behavior
+const TRANSITION_DURATION = 1000; // in ms
+const IMAGE_DISPLAY_DURATION = 5000; // in ms
+
 const Header: React.FC = () => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [nextImageIndex, setNextImageIndex] = useState(1);
+    const [isFading, setIsFading] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
+    
+    // Function to move to the next image in the loop
+    const advanceImage = useCallback(() => {
+        setIsFading(true);
+        
+        // Wait for fade-out then change images
+        setTimeout(() => {
+            setCurrentImageIndex(nextImageIndex);
+            setNextImageIndex((nextImageIndex + 1) % images.length);
+            setIsFading(false);
+        }, TRANSITION_DURATION);
+    }, [nextImageIndex]);
+    
+    // Effect to cycle through images
+    useEffect(() => {
+        if (isPaused) return;
+        
+        const interval = setInterval(() => {
+            advanceImage();
+        }, IMAGE_DISPLAY_DURATION);
+        
+        // Cleanup interval on component unmount or dependency changes
+        return () => clearInterval(interval);
+    }, [nextImageIndex, isPaused, advanceImage]);
+    
+    // Preload all images on component mount
+    useEffect(() => {
+        images.forEach(imgSrc => {
+            const img = new Image();
+            img.src = imgSrc;
+        });
+    }, []);
+    
     return (
       <header
-        className="bg-gradient-to-bl from-black to-green-800 text-white text-center px-8 py-24 relative"
+        className="bg-gradient-to-bl from-black to-green-700 text-white text-center px-8 py-24 relative"
         style={{
           backgroundBlendMode: 'overlay',
         }}
+        // Optional: pause/resume animation on hover
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
-        {/* Background images with opacity */}
-        <div 
-          className="absolute inset-0 z-0" 
-          style={{
-            backgroundImage: `${images.map(img => `url(${img})`).join(', ')}`,
-            backgroundSize: 'cover, cover, cover',
-            backgroundPosition: 'center, center, center',
-            opacity: 0.4,  // Control opacity of all images here
-            mixBlendMode: 'overlay'
-          }}
-        />
+        {/* Loop through all images and render them with different z-indices */}
+        {images.map((imgSrc, index) => (
+          <div 
+            key={imgSrc}
+            className="absolute inset-0 transition-opacity duration-1000"
+            style={{
+              backgroundImage: `url(${imgSrc})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              // Show current image or next image during transition
+              opacity: index === currentImageIndex 
+                ? (isFading ? 0 : 1) 
+                : (index === nextImageIndex && isFading ? 0.5 : 0),
+              zIndex: 0,
+              mixBlendMode: 'overlay'
+            }}
+          />
+        ))}
+        
+        {/* Image navigation dots (optional) */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              className={`w-2 h-2 rounded-full transition-colors ${
+                index === currentImageIndex ? 'bg-white' : 'bg-gray-400'
+              }`}
+              onClick={() => {
+                setNextImageIndex(index);
+                advanceImage();
+              }}
+              aria-label={`View background image ${index + 1}`}
+            />
+          ))}
+        </div>
         
         {/* Content with relative positioning to appear above the background */}
         <div className="relative z-10">
