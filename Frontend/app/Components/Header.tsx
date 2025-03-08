@@ -147,7 +147,7 @@ const Header: React.FC = () => {
                   <p className="uppercase">Detection accuracy rate</p>
                 </div>
                 <div>
-                  <p className="text-8xl">100+</p>
+                  <p className="text-8xl">10+</p>
                   <p className="uppercase">Plant diseases identified</p>
                 </div>
               </div>
