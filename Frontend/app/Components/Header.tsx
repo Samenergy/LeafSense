@@ -3,11 +3,35 @@ import { FaGithub } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import Link from 'next/link';
+
+const images = [
+  '/banner.webp',
+  '/background2.webp',  // Add your other image paths here
+  '/background3.webp'   // Add your other image paths here
+];
+
 const Header: React.FC = () => {
     return (
       <header
-        className="bg-gradient-to-bl from-black to-green-800 text-white text-center px-8 py-24"
+        className="bg-gradient-to-bl from-black to-green-800 text-white text-center px-8 py-24 relative"
+        style={{
+          backgroundBlendMode: 'overlay',
+        }}
       >
+        {/* Background images with opacity */}
+        <div 
+          className="absolute inset-0 z-0" 
+          style={{
+            backgroundImage: `${images.map(img => `url(${img})`).join(', ')}`,
+            backgroundSize: 'cover, cover, cover',
+            backgroundPosition: 'center, center, center',
+            opacity: 0.4,  // Control opacity of all images here
+            mixBlendMode: 'overlay'
+          }}
+        />
+        
+        {/* Content with relative positioning to appear above the background */}
+        <div className="relative z-10">
         <div className="flex items-center justify-between">
         <h1 className="text-7xl text-left font-bold mt-20">Design, <br /> Develop and <br /> <i className="font-light">Deploy</i>
         </h1>
@@ -64,6 +88,9 @@ const Header: React.FC = () => {
       
       
     </div>
+
+        
+      </div>
 
         
       </header>
