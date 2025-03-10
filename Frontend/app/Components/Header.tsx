@@ -104,7 +104,7 @@ const Header: React.FC = () => {
         {/* Content with relative positioning to appear above the background */}
         <div className="relative z-10">
           <div className="flex items-center justify-between">
-            <h1 className="text-7xl text-left font-bold mt-20">Detect, <br /> Diagnose and <br /> <i className="font-light">Protect</i>
+            <h1 className="text-7xl text-left font-bold mt-20">Detect, <br /> Diagnose and <br /> <i className="font-light">Defend</i>
             </h1>
             <div>
               <p className="text-md text-gray-300 text-left max-w-lg mt-8">LeafSense uses advanced AI technology to instantly identify plant diseases from simple leaf photos. Our cutting-edge system helps farmers, gardeners, and agricultural professionals detect problems early, reduce crop losses, and implement targeted treatments for healthier plants.</p>

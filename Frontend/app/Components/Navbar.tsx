@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10); // Adjust the scroll threshold as needed
+      setIsScrolled(window.scrollY > 10); 
     };
 
     window.addEventListener('scroll', handleScroll);
