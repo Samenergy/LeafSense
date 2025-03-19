@@ -1,13 +1,22 @@
+from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 import numpy as np
 import tensorflow as tf
 import cv2
-from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import JSONResponse
 from io import BytesIO
 from PIL import Image
-import matplotlib.pyplot as plt
 
 app = FastAPI()
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change this to ["http://localhost:3000"] for better security
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load the model once during server startup
 model = tf.keras.models.load_model('model.keras')
@@ -53,4 +62,3 @@ async def predict(file: UploadFile = File(...)):
 
     # Return the prediction in a JSON response
     return JSONResponse(content={"prediction": model_prediction})
-

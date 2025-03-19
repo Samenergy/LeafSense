@@ -1,9 +1,5 @@
 "use client";
 import { FaChevronRight } from "react-icons/fa6";
-import { FaGithub } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedinIn } from "react-icons/fa";
-import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import ScanModal from "./Scan";
 import CountUp from "react-countup";
@@ -59,7 +55,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className="bg-gradient-to-bl from-black to-green-700 text-white text-center px-8 py-24 relative"
+      className="bg-gradient-to-bl  text-white text-center px-8 py-24 relative"
       style={{
         backgroundBlendMode: "overlay",
       }}
@@ -116,7 +112,7 @@ const Header: React.FC = () => {
             <i className="font-light">Defend</i>
           </h1>
           <div>
-            <p className="text-md text-gray-300 text-left max-w-lg mt-8">
+            <p className="text-lg text-gray-300 text-left max-w-lg mt-8">
               LeafSense uses advanced AI technology to instantly identify plant
               diseases from simple leaf photos. Our cutting-edge system helps
               farmers, gardeners, and agricultural professionals detect problems
@@ -129,9 +125,9 @@ const Header: React.FC = () => {
           <div className="flex items-center justify-between">
             <button
               onClick={() => setIsScanModalOpen(true)}
-              className="rounded-full bg-black border border-gray-500 mt-8 text-left px-4 py-2 flex items-center space-x-5 hover:bg-white hover:text-black transition-colors"
+              className="rounded-md bg-[#25c656]  -mt-10 text-left px-6 py-4 flex items-center space-x-5 hover:bg-white hover:text-black transition-colors"
             >
-              Start scanning <FaChevronRight />
+              Start scanning
             </button>
             <div className="space-x-20 flex items-center mt-36 justify-between">
               <div>
