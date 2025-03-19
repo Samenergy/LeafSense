@@ -6,6 +6,7 @@ import { FaLinkedinIn } from "react-icons/fa";
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import ScanModal from "./Scan";
+import CountUp from "react-countup";
 
 const images = [
   "/banner.webp",
@@ -122,49 +123,29 @@ const Header: React.FC = () => {
               early, reduce crop losses, and implement targeted treatments for
               healthier plants.
             </p>
-            <button 
-              onClick={() => setIsScanModalOpen(true)}
-              className="rounded-full border border-gray-500 mt-8 text-left px-4 py-2 flex items-center space-x-5 hover:bg-white hover:text-black transition-colors"
-            >
-              Start scanning <FaChevronRight />
-            </button>
           </div>
         </div>
         <div>
           <div className="flex items-center justify-between">
-            <div className="space-x-5 flex items-center mt-36 text-2xl">
-              <Link
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 border border-gray-300 rounded-full bg-white text-black hover:bg-[#145b2f] hover:text-white hover:shadow-md transition"
-              >
-                <FaGithub />
-              </Link>
-              <Link
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 border border-gray-300 rounded-full bg-white text-black hover:bg-[#145b2f] hover:text-white hover:shadow-md transition"
-              >
-                <FaLinkedinIn />
-              </Link>
-              <Link
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 border border-gray-300 rounded-full bg-white text-black hover:bg-[#145b2f] hover:text-white hover:shadow-md transition"
-              >
-                <FaInstagram />
-              </Link>
-            </div>
+            <button
+              onClick={() => setIsScanModalOpen(true)}
+              className="rounded-full bg-black border border-gray-500 mt-8 text-left px-4 py-2 flex items-center space-x-5 hover:bg-white hover:text-black transition-colors"
+            >
+              Start scanning <FaChevronRight />
+            </button>
             <div className="space-x-20 flex items-center mt-36 justify-between">
               <div>
-                <p className="text-8xl">95%</p>
+                <p className="text-8xl">
+                  <CountUp start={0} end={95} duration={5} />
+                  <span>%</span>
+                </p>
                 <p className="uppercase">Detection accuracy rate</p>
               </div>
               <div>
-                <p className="text-8xl">10+</p>
+                <p className="text-8xl">
+                  <CountUp start={0} end={10} duration={5} />
+                  <span>+</span>
+                </p>
                 <p className="uppercase">Plant diseases identified</p>
               </div>
             </div>
@@ -172,9 +153,9 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      <ScanModal 
-        isOpen={isScanModalOpen} 
-        onClose={() => setIsScanModalOpen(false)} 
+      <ScanModal
+        isOpen={isScanModalOpen}
+        onClose={() => setIsScanModalOpen(false)}
       />
     </header>
   );

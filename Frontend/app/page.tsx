@@ -25,7 +25,6 @@ export default function Home() {
       <HowItWorksSection />
       <StatisticsSection />
       <TestimonialSection />
-      <CTASection />
       <Footer />
     </main>
   );
