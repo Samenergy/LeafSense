@@ -19,11 +19,11 @@ const Navbar: React.FC = () => {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-10 transition-all duration-300 ${
-        isScrolled ? ' backdrop-blur-md' : 'bg-transparent'
+        isScrolled ? 'backdrop-blur-md' : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl  flex  items-center p-4 gap-5">
-        <div className="text-white text-xl rounded-full border border-gray-500">
+      <div className="max-w-7xl flex items-center p-4 gap-5">
+        <div className="text-gray-900 dark:text-white text-xl rounded-full border border-gray-500">
           <Link href="/" className="">
             <img
               src="/logo.png"
@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
             />
           </Link>
         </div>
-        <div className="space-x-8 text-white rounded-full border border-gray-500 px-4 py-2 text-md">
+        <div className="space-x-8 text-gray-900 dark:text-white rounded-full border border-gray-500 px-4 py-2 text-md">
           <Link href="/">Home</Link>
           <Link href="/detect">Detect Disease</Link>
           <Link href="/diseases">Disease Database</Link>

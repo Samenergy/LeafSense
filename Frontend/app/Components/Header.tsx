@@ -4,15 +4,11 @@ import { useState, useEffect, useCallback } from "react";
 import ScanModal from "./Scan";
 import CountUp from "react-countup";
 
-const images = [
-  "/banner.webp",
-  "/banner-bg.webp",
-  "/banner-bg-2.webp",
-];
+const images = ["/banner.webp", "/banner-bg.webp", "/banner-bg-2.webp"];
 
 // Animation settings
-const TRANSITION_DURATION = 1000; 
-const IMAGE_DISPLAY_DURATION = 5000; 
+const TRANSITION_DURATION = 1000;
+const IMAGE_DISPLAY_DURATION = 5000;
 
 const Header: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -55,7 +51,7 @@ const Header: React.FC = () => {
       {images.map((imgSrc, index) => (
         <div
           key={imgSrc}
-          className="absolute inset-0 transition-opacity duration-1000"
+          className="absolute inset-0 transition-opacity duration-1000 dark:mix-blend-overlay"
           style={{
             backgroundImage: `url(${imgSrc})`,
             backgroundSize: "cover",
@@ -69,39 +65,19 @@ const Header: React.FC = () => {
                 ? 1
                 : 0,
             zIndex: 0,
-            mixBlendMode: "overlay",
           }}
         />
       ))}
 
-      {/* Light mode overlay removed, dark mode overlay still applies */}
-      <div className="absolute inset-0 bg-white opacity-50 dark:opacity-0 transition-opacity"></div>
-
-      {/* Navigation dots */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            className={`w-2 h-2 rounded-full transition-colors ${
-              index === currentImageIndex
-                ? "bg-black dark:bg-white"
-                : "bg-gray-300 dark:bg-gray-400"
-            }`}
-            onClick={() => {
-              setNextImageIndex(index);
-              advanceImage();
-            }}
-            aria-label={`View background image ${index + 1}`}
-          />
-        ))}
-      </div>
+      {/* Overlay for light/dark mode */}
+      <div className="absolute inset-0 bg-gray-100 opacity-70 dark:bg-black dark:opacity-0"></div>
 
       {/* Content */}
       <div className="relative z-10">
         <div className="flex items-center justify-between gap-72">
           <h1 className="text-7xl text-left font-bold mt-20 text-gray-900 dark:text-white">
             Detect, <br /> Diagnose and <br />{" "}
-            <i className="font-light text-[#25c656] dark:text-white">Defend</i>
+            <i className="font-light text-[#25c656] dark:text-[#25c656]">Defend</i>
           </h1>
           <div>
             <p className="text-lg text-gray-700 dark:text-gray-300 text-left max-w-lg mt-8">
@@ -128,14 +104,18 @@ const Header: React.FC = () => {
                   <CountUp start={0} end={95} duration={5} />
                   <span>%</span>
                 </p>
-                <p className="uppercase text-gray-700 dark:text-gray-300">Detection accuracy rate</p>
+                <p className="uppercase text-gray-700 dark:text-gray-300">
+                  Detection accuracy rate
+                </p>
               </div>
               <div>
                 <p className="text-8xl text-gray-900 dark:text-white">
                   <CountUp start={0} end={10} duration={5} />
                   <span>+</span>
                 </p>
-                <p className="uppercase text-gray-700 dark:text-gray-300">Plant diseases identified</p>
+                <p className="uppercase text-gray-700 dark:text-gray-300">
+                  Plant diseases identified
+                </p>
               </div>
             </div>
           </div>
