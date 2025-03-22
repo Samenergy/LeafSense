@@ -6,13 +6,13 @@ import CountUp from "react-countup";
 
 const images = [
   "/banner.webp",
-  "/banner-bg.webp", // Add your other image paths here
-  "/banner-bg-2.webp", // Add your other image paths here
+  "/banner-bg.webp",
+  "/banner-bg-2.webp",
 ];
 
-// Animation settings - adjust these to control the loop behavior
-const TRANSITION_DURATION = 1000; // in ms
-const IMAGE_DISPLAY_DURATION = 5000; // in ms
+// Animation settings
+const TRANSITION_DURATION = 1000; 
+const IMAGE_DISPLAY_DURATION = 5000; 
 
 const Header: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -21,11 +21,8 @@ const Header: React.FC = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [isScanModalOpen, setIsScanModalOpen] = useState(false);
 
-  // Function to move to the next image in the loop
   const advanceImage = useCallback(() => {
     setIsFading(true);
-
-    // Wait for fade-out then change images
     setTimeout(() => {
       setCurrentImageIndex(nextImageIndex);
       setNextImageIndex((nextImageIndex + 1) % images.length);
@@ -33,19 +30,14 @@ const Header: React.FC = () => {
     }, TRANSITION_DURATION);
   }, [nextImageIndex]);
 
-  // Effect to cycle through images
   useEffect(() => {
     if (isPaused) return;
-
     const interval = setInterval(() => {
       advanceImage();
     }, IMAGE_DISPLAY_DURATION);
-
-    // Cleanup interval on component unmount or dependency changes
     return () => clearInterval(interval);
   }, [nextImageIndex, isPaused, advanceImage]);
 
-  // Preload all images on component mount
   useEffect(() => {
     images.forEach((imgSrc) => {
       const img = new Image();
@@ -55,15 +47,11 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className="bg-gradient-to-bl  text-white text-center px-8 py-24 relative"
-      style={{
-        backgroundBlendMode: "overlay",
-      }}
-      // Optional: pause/resume animation on hover
+      className="relative text-center px-8 py-24 bg-gray-100 dark:bg-gradient-to-bl dark:text-white transition-colors"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Loop through all images and render them with different z-indices */}
+      {/* Background images */}
       {images.map((imgSrc, index) => (
         <div
           key={imgSrc}
@@ -72,7 +60,6 @@ const Header: React.FC = () => {
             backgroundImage: `url(${imgSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            // Show current image or next image during transition
             opacity:
               index === currentImageIndex
                 ? isFading
@@ -87,13 +74,18 @@ const Header: React.FC = () => {
         />
       ))}
 
-      {/* Image navigation dots (optional) */}
+      {/* Light mode overlay removed, dark mode overlay still applies */}
+      <div className="absolute inset-0 bg-white opacity-50 dark:opacity-0 transition-opacity"></div>
+
+      {/* Navigation dots */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
         {images.map((_, index) => (
           <button
             key={index}
             className={`w-2 h-2 rounded-full transition-colors ${
-              index === currentImageIndex ? "bg-white" : "bg-gray-400"
+              index === currentImageIndex
+                ? "bg-black dark:bg-white"
+                : "bg-gray-300 dark:bg-gray-400"
             }`}
             onClick={() => {
               setNextImageIndex(index);
@@ -104,15 +96,15 @@ const Header: React.FC = () => {
         ))}
       </div>
 
-      {/* Content with relative positioning to appear above the background */}
+      {/* Content */}
       <div className="relative z-10">
         <div className="flex items-center justify-between gap-72">
-          <h1 className="text-7xl text-left font-bold mt-20">
+          <h1 className="text-7xl text-left font-bold mt-20 text-gray-900 dark:text-white">
             Detect, <br /> Diagnose and <br />{" "}
-            <i className="font-light">Defend</i>
+            <i className="font-light text-[#25c656] dark:text-white">Defend</i>
           </h1>
           <div>
-            <p className="text-lg text-gray-300 text-left max-w-lg mt-8">
+            <p className="text-lg text-gray-700 dark:text-gray-300 text-left max-w-lg mt-8">
               LeafSense uses advanced AI technology to instantly identify plant
               diseases from simple leaf photos. Our cutting-edge system helps
               farmers, gardeners, and agricultural professionals detect problems
@@ -121,28 +113,29 @@ const Header: React.FC = () => {
             </p>
           </div>
         </div>
+
         <div>
           <div className="flex items-center justify-between">
             <button
               onClick={() => setIsScanModalOpen(true)}
-              className="rounded-md bg-[#25c656]  -mt-10 text-left px-6 py-4 flex items-center space-x-5 hover:bg-white hover:text-black transition-colors"
+              className="rounded-md bg-[#25c656] -mt-10 text-left px-6 py-4 flex items-center space-x-5 hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-colors"
             >
               Start scanning
             </button>
             <div className="space-x-20 flex items-center mt-36 justify-between">
               <div>
-                <p className="text-8xl">
+                <p className="text-8xl text-gray-900 dark:text-white">
                   <CountUp start={0} end={95} duration={5} />
                   <span>%</span>
                 </p>
-                <p className="uppercase">Detection accuracy rate</p>
+                <p className="uppercase text-gray-700 dark:text-gray-300">Detection accuracy rate</p>
               </div>
               <div>
-                <p className="text-8xl">
+                <p className="text-8xl text-gray-900 dark:text-white">
                   <CountUp start={0} end={10} duration={5} />
                   <span>+</span>
                 </p>
-                <p className="uppercase">Plant diseases identified</p>
+                <p className="uppercase text-gray-700 dark:text-gray-300">Plant diseases identified</p>
               </div>
             </div>
           </div>

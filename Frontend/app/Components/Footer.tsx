@@ -1,13 +1,15 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-xl font-bold mb-4">LeafSense</h3>
+          <div className="flex flex-col items-start">
+            <div>
+              <img className="w-52" src="/logo.png" alt="" />
+            </div>
             <p className="text-gray-400">
               Advanced plant disease detection powered by AI to help you
               maintain healthy plants and crops.
@@ -106,4 +108,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;
