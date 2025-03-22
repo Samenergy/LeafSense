@@ -16,6 +16,25 @@ const Header: React.FC = () => {
   const [isFading, setIsFading] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isScanModalOpen, setIsScanModalOpen] = useState(false);
+  const [showDetect, setShowDetect] = useState(false);
+  const [showDiagnose, setShowDiagnose] = useState(false);
+  const [showDefend, setShowDefend] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+
+  // Sequential animations on load
+  useEffect(() => {
+    const detectTimer = setTimeout(() => setShowDetect(true), 500);
+    const diagnoseTimer = setTimeout(() => setShowDiagnose(true), 1000);
+    const defendTimer = setTimeout(() => setShowDefend(true), 1500);
+    const descriptionTimer = setTimeout(() => setShowDescription(true), 2000);
+
+    return () => {
+      clearTimeout(detectTimer);
+      clearTimeout(diagnoseTimer);
+      clearTimeout(defendTimer);
+      clearTimeout(descriptionTimer);
+    };
+  }, []);
 
   const advanceImage = useCallback(() => {
     setIsFading(true);
@@ -75,11 +94,34 @@ const Header: React.FC = () => {
       {/* Content */}
       <div className="relative z-10">
         <div className="flex items-center justify-between gap-72">
-          <h1 className="text-7xl text-left font-bold mt-20 text-gray-900 dark:text-white">
-            Detect, <br /> Diagnose and <br />{" "}
-            <i className="font-light text-[#25c656] dark:text-[#25c656]">Defend</i>
+          <h1 className="text-7xl text-left font-bold mt-20 text-gray-900 dark:text-white overflow-hidden">
+            <div
+              className={`transform transition-transform duration-700 ${
+                showDetect ? "translate-x-0" : "-translate-x-full"
+              }`}
+            >
+              Detect,
+            </div>
+            <div
+              className={`transform transition-transform duration-700 ${
+                showDiagnose ? "translate-x-0" : "-translate-x-full"
+              }`}
+            >
+              Diagnose and
+            </div>
+            <div
+              className={`transform transition-transform duration-700 ${
+                showDefend ? "translate-x-0" : "-translate-x-full"
+              }`}
+            >
+              <i className="font-light text-[#25c656] dark:text-[#25c656]">Defend</i>
+            </div>
           </h1>
-          <div>
+          <div
+            className={`transform transition-transform duration-1000 ${
+              showDescription ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
             <p className="text-lg text-gray-700 dark:text-gray-300 text-left max-w-lg mt-8">
               LeafSense uses advanced AI technology to instantly identify plant
               diseases from simple leaf photos. Our cutting-edge system helps
