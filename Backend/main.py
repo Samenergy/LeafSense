@@ -7,7 +7,7 @@ import cv2
 from io import BytesIO
 from PIL import Image
 
-app = FastAPI()
+app = FastAPI(title="Plant Disease Detection API", description="API to detect plant diseases from images", version="1.0")
 
 # Enable CORS
 app.add_middleware(
